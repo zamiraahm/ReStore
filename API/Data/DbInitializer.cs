@@ -23,7 +23,7 @@ namespace API.Data
                 },
                 new Product
                 {
-                    Name = "Green Angular Board 3000",
+                    Name = "The godather",
                     Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                     Price = 15000,
                     PictureUrl = "/images/products/sb-ang2.png",
