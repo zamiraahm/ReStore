@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20230503174124_BasketEntityAdded")]
-    partial class BasketEntityAdded
+    [Migration("20230507215737_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,10 +63,13 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Brand")
+                    b.Property<string>("Author")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Genre")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -80,9 +83,6 @@ namespace API.Data.Migrations
 
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

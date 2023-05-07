@@ -3,8 +3,8 @@ export interface BasketItem {
     name: string;
     price: number;
     pictureUrl: string;
-    brand: string;
-    type: string;
+    author: string;
+    genre: string;
     quantity: number;
   }
 export interface Basket {

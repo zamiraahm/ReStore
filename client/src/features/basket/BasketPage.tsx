@@ -41,7 +41,7 @@ export default function BasketPage(){
               <TableCell align="right">Price</TableCell>
               <TableCell align="center">Quantity</TableCell>
               <TableCell align="right">Subtotal</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="right">&nbsp;(g)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

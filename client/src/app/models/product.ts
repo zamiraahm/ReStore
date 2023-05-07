@@ -4,7 +4,7 @@ export interface Product {
     description: string;
     price:number;
     pictureUrl: string;
-    type?: string;
-    brand: string;
+    genre?: string;
+    author: string;
     quantityInStock?:number;
 }

@@ -86,8 +86,8 @@ namespace API.Controllers
                     Name = item.Product.Name,
                     Price = item.Product.Price,
                     PictureUrl = item.Product.PictureUrl,
-                    Type = item.Product.Type,
-                    Brand = item.Product.Brand,
+                    Genre = item.Product.Genre,
+                    Author = item.Product.Author,
                     Quantity = item.Quantity
                 }).ToList()
             };

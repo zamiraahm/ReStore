@@ -12,9 +12,9 @@ namespace API.Entities
 
         public string PictureUrl { get; set; }
 
-        public string Type { get; set; }
+        public string Genre { get; set; }
 
-        public string Brand { get; set; }
+        public string Author { get; set; }
 
         public int QuantityInStock { get; set; }
     }
