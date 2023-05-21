@@ -53,7 +53,7 @@ namespace API.Controllers
             var authors = await _context.Products.Select(p=>p.Author).Distinct().ToListAsync();
             var genres = await _context.Products.Select(p=>p.Genre).Distinct().ToListAsync();
 
-            return Ok(new {authors});
+            return Ok(new {authors,genres});
         }
     }
 }

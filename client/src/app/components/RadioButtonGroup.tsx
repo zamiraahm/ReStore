@@ -8,7 +8,7 @@ interface Props{
 
 export default function RadioButtonGroup({options,onChange,selectedValue}:Props){
     return(
-        <FormControl>
+        <FormControl component='fieldset'>
         <RadioGroup onChange={onChange} value={selectedValue}>
           {options.map(({value, label})=>(
               <FormControlLabel value={value} control={<Radio />} label={label} key={value}/>          

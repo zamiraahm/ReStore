@@ -3,7 +3,7 @@ import {  useEffect } from "react";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchFilters, fetchProductsAsync, productSelectors, setPageNumber, setProductParams } from "./catalogSlice";
-import { Box, Grid, Pagination, Paper, Typography } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import ProductSearch from "./ProductSearch";
 import RadioButtonGroup from "../../app/components/RadioButtonGroup";
 import CheckboxButtons from "../../app/components/CheckboxButtons";
@@ -36,6 +36,7 @@ if(!filtersLoaded) return <LoadingComponent message='Loading products...'/>
           <Paper sx={{mb:2}}>
             <ProductSearch/>
           </Paper>
+
           <Paper sx={{mb:2, p:2}}>
             <RadioButtonGroup
             selectedValue={productParams.orderBy}
@@ -43,6 +44,7 @@ if(!filtersLoaded) return <LoadingComponent message='Loading products...'/>
             onChange={(e)=>dispatch(setProductParams({orderBy:e.target.value}))}
             />
           </Paper>
+          
           <Paper sx={{mb:2, p:2}}>
             <CheckboxButtons
               items={authors}

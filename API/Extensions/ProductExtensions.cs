@@ -27,10 +27,10 @@ namespace API.Extensions
             var genreList= new List<string>();
 
             if(!string.IsNullOrEmpty(authors))
-            authorList.AddRange(authors.ToLower().Split(".").ToList());
+            authorList.AddRange(authors.ToLower().Split(",").ToList());
 
             if(!string.IsNullOrEmpty(genres))
-            genreList.AddRange(genres.ToLower().Split(".").ToList());
+            genreList.AddRange(genres.ToLower().Split(",").ToList());
 
             query = query.Where(p=>authorList.Count==0 || authorList.Contains(p.Author.ToLower()));
             query = query.Where(p=>genreList.Count==0 || genreList.Contains(p.Genre.ToLower()));

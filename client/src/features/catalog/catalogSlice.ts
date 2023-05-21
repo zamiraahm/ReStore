@@ -22,8 +22,8 @@ function getAxiosParams(productParams: ProductParams){
     params.append('pageSize', productParams.pageSize.toString());
     params.append('orderBy', productParams.orderBy);
     if(productParams.searchTerm) params.append('searchTerm', productParams.searchTerm);
-    if(productParams.authors.length>0)params.append('pageNumber', productParams.authors.toString());
-    if(productParams.genres.length>0)params.append('pageNumber', productParams.genres.toString());
+    if(productParams.authors.length>0)params.append('authors', productParams.authors.toString());
+    if(productParams.genres.length>0)params.append('genres', productParams.genres.toString());
     return params;
 }
 
@@ -65,7 +65,7 @@ export const fetchFilters=createAsyncThunk(
 
 function initParams(){
     return{
-        pageNumber: 1,
+        pageNumber: 1   ,
         pageSize: 6,
         orderBy: 'name',
         authors:[],
@@ -85,9 +85,9 @@ export const catalogSlice = createSlice({
         metaData:null
     }),
     reducers: {
-        setProductParams: (state, action)=>{
+        setProductParams: (state, action)=>{    
             state.productsLoaded=false;
-            state.productParams={...state.productParams,...action.payload, pageNumber:1};
+            state.productParams={...state.productParams, ...action.payload, pageNumber:1};
         },
         setPageNumber:(state,action)=>{
             state.productsLoaded=false;
