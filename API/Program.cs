@@ -1,7 +1,12 @@
+using System.Text;
 using API.Data;
+using API.Entities;
 using API.Middleware;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +22,30 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 });
 
 builder.Services.AddCors();
+builder.Services.AddIdentityCore<User>(opt =>
+{
+    //this will prevent any duplicate emails being added to our database
+    opt.User.RequireUniqueEmail = true;
+})
+    .AddRoles<IdentityRole>()
+    //na jep tabela per roles edhe members
+    .AddEntityFrameworkStores<StoreContext>();
+    //services for authentication and authorization
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+   .AddJwtBearer(opt =>
+   {
+     opt.TokenValidationParameters = new TokenValidationParameters
+     {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
+            GetBytes(builder.Configuration["JWTSettings:TokenKey"]))
+     };
+   });
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<TokenService>();
 
 var app = builder.Build();
 
@@ -34,21 +63,24 @@ app.UseCors(opt =>
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 try
 {
-    context.Database.Migrate(); 
-    DbInitializer.Initialize(context);
+    await context.Database.MigrateAsync(); 
+    await DbInitializer.Initialize(context, userManager);
 }
 catch(Exception ex)
 {
     logger.LogError(ex, "A problem ocurred during migration");
 }
+
 
 app.Run();
