@@ -9,8 +9,9 @@ import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
 import BasketPage from "../../features/basket/BasketPage";
 import CheckoutPage from "../../features/checkout/CheckoutPage";
-import { Login } from "@mui/icons-material";
+
 import Register from "../../features/account/Register";
+import Login from "../../features/account/Login";
 
 export const router =createBrowserRouter([
     {
