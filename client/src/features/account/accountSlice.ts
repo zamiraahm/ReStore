@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
+    import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { User } from "../../app/models/user";
 import { FieldValues } from "react-hook-form";
 import agent from "../../app/api/agent";
 
 interface AccountState{
-    user: User | null
+    user: User | null;
 }
 
 const initialState : AccountState = {
