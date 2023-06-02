@@ -19,6 +19,7 @@ namespace API.Controllers
         public AccountController(UserManager<User> userManager, TokenService tokenService, 
                StoreContext context)
         {
+             _context = context;
             _tokenService = tokenService;
             _userManager = userManager;
         }
