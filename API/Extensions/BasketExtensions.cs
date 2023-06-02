@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 
@@ -11,6 +7,11 @@ namespace API.Extensions
     {
         public static BasketDto MapBasketToDto(this Basket basket)
         {
+            if (basket == null)
+    {
+        return null; 
+    }
+
               return new BasketDto
             {
                 Id = basket.Id,
@@ -18,11 +19,11 @@ namespace API.Extensions
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     ProductId = item.ProductId,
-                    Name = item.Product.Name,
-                    Price = item.Product.Price,
-                    PictureUrl = item.Product.PictureUrl,
-                    Genre = item.Product.Genre,
-                    Author = item.Product.Author,
+                    Name = item.Product?.Name,
+                    Price = (long)(item.Product?.Price ?? 0),
+                    PictureUrl = item.Product?.PictureUrl,
+                    Genre = item.Product?.Genre,
+                    Author = item.Product?.Author,
                     Quantity = item.Quantity
                 }).ToList()
             };
