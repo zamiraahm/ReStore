@@ -1,3 +1,6 @@
+using API.DTOs;
+using Microsoft.AspNetCore.Mvc;
+
 namespace API.Entities
 {
     public class Basket
@@ -23,6 +26,10 @@ namespace API.Entities
             if(item.Quantity == 0) Items.Remove(item);
         }
 
+        internal ActionResult<BasketDto> MapBasketDto()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
