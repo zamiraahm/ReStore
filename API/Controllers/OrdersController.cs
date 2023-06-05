@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -27,7 +23,7 @@ namespace API.Controllers
         public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
             return await _context.Orders
-                 .ProjectOrderToDto()
+                 .ProjectOrderToOrderDto()
                  .Where(x => x.BuyerId == User.Identity.Name)
                  .ToListAsync();
         }
@@ -36,7 +32,7 @@ namespace API.Controllers
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
             return await _context.Orders
-                .ProjectOrderToDto()
+                .ProjectOrderToOrderDto()
                 .Where(x => x.BuyerId == User.Identity.Name && x.Id == id)
                 .FirstOrDefaultAsync();
         }
@@ -58,7 +54,7 @@ namespace API.Controllers
                 var itemOrdered = new ProductItemOrdered
                 {
                     ProductId = productItem.Id,
-                    Name = productItem.Name,
+                    Name = productItem.Name,                                                        
                     PictureUrl = productItem.PictureUrl
                 };
                 var orderItem = new OrderItem
@@ -72,7 +68,7 @@ namespace API.Controllers
             }
 
             var subtotal = items.Sum(item => item.Price * item.Quantity);
-            var deliveryFee = subtotal > 10000 ? 0 : 500;
+            var deliveryFee = subtotal > 30 ? 0 : 5;
 
             var order = new Order 
             {
@@ -88,8 +84,10 @@ namespace API.Controllers
 
             if( orderDto.SaveAddress)
             {
-                var user =await _context.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
-                user.Address = new UserAddress
+                var user =await _context.Users
+                .Include(a => a.Address)
+                .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+                var address = new UserAddress
                 {
                     FullName = orderDto.ShippingAddress.FullName,
                     Address1 = orderDto.ShippingAddress.Address1,
@@ -99,7 +97,8 @@ namespace API.Controllers
                     Zip = orderDto.ShippingAddress.Zip,
                     Country = orderDto.ShippingAddress.Country,
                 };
-                _context.Update(user);
+                user.Address= address;
+                //_context.Update(user);
             }
 
             var result = await _context.SaveChangesAsync() > 0;
