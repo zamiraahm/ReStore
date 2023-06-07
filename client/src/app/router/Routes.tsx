@@ -14,6 +14,7 @@ import Register from "../../features/account/Register";
 import Login from "../../features/account/Login";
 import RequireAuth from "./RequireAuth";
 import Order from "../../features/orders/Orders";
+import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 
 export const router =createBrowserRouter([
     {
@@ -31,7 +32,7 @@ export const router =createBrowserRouter([
             {path:'server-error',element:<ServerError/>},
             {path:'not-found',element:<NotFound/>},
             {path:'basket',element:<BasketPage/>},
-            {path:'checkout',element:<CheckoutPage/>},
+            {path:'checkout',element:<CheckoutWrapper/>},
             {path: 'orders', element:<Order/>},
             {path:'login',element:<Login/>},
             {path:'register',element:<Register/>},

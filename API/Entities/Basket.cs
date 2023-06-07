@@ -1,5 +1,4 @@
 using API.DTOs;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.Entities
 {
@@ -29,10 +28,26 @@ namespace API.Entities
             if(item.Quantity == 0) Items.Remove(item);
         }
 
-        internal ActionResult<BasketDto> MapBasketDto()
+        public BasketDto MapBasketDto()
         {
-            throw new NotImplementedException();
+            return new BasketDto
+            {
+                Id = Id,
+                BuyerId = BuyerId,
+                PaymentIntentId = PaymentIntentId,
+                ClientSecret = ClientSecret,
+                Items = Items.Select(item => new BasketItemDto
+                {
+                    ProductId = item.ProductId,
+                    Name = item.Product?.Name,
+                    Price = (long)(item.Product?.Price ?? 0),
+                    PictureUrl = item.Product?.PictureUrl,
+                    Genre = item.Product?.Genre,
+                    Author = item.Product?.Author,
+                    Quantity = item.Quantity
+                }).ToList()
+            };
         }
-    }
+    }   
 
 }
