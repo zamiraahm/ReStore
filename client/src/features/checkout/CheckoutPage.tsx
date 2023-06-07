@@ -125,19 +125,17 @@ export default function CheckoutPage() {
         setActiveStep(activeStep - 1);
     };
 
-    function submitDisabled(): boolean {
-        if (activeStep === steps.length - 1) {
-          return (
-            !cardComplete.cardCvc ||
-            !cardComplete.cardExpiry ||
-            !cardComplete.cardNumber ||
-            !methods.formState.isValid ||
-            loading // Add loading state check to disable the button while submitting the order
-          );
-        } else {
-          return !methods.formState.isValid || loading; // Add loading state check to disable the button while submitting the order
+    function submitDisabled(): boolean{
+        if(activeStep === steps.length-1){
+            return !cardComplete.cardCvc 
+            || !cardComplete.cardExpiry 
+            || !cardComplete.cardNumber
+            || !methods.formState.isValid
+        }else{
+            return !methods.formState.isValid
         }
-      }
+    }
+
     return (
         <FormProvider {...methods}>
                 <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
