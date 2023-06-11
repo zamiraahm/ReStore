@@ -47,7 +47,8 @@ namespace API.Controllers
             if(!result ) return BadRequest(new ProblemDetails{Title ="Problem updating basket with intent"});
 
             return basket.MapBasketDto();  
-        }   
+        } 
+          
         [HttpPost("webhook")]
         public async Task<ActionResult>StripeWebhook()
         {
