@@ -1,13 +1,51 @@
-# fly.toml app configuration file generated for black-leaf-9251 on 2023-06-13T16:50:17+02:00
+# fly.toml app configuration file generated for dry-voice-5442 on 2023-06-13T18:04:31+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "black-leaf-9251"
+app = "dry-voice-5442"
 primary_region = "otp"
 
+kill_timeout = 5
+processes = []
+
 [build]
-  image = "zamiraahm/restore:latest"
+  image = "zamiraahm/resore:latest"
+
+[env]
+     ASPNETCORE_URLS="http://+:8080"
+     StripeSettings_PublishableKey="pk_test_51NHQe7HlOJnVL2LpJZpXTtauAYXwR2EEUpYn96XiDhyptTOv9OxiSCI0R5FfvEU2vtlNRgrDEPdUNDNruqCF9ac3001WV51vYc"
+
+
+[experimental]
+   allowed_public_ports = []
+   auto_rollback =true
+
+[[services]]
+    http_checks = []
+    internal_port = 8080
+    processes = ["app"]
+    protocol = "tcp"
+    script_checks = []
+    [services.concurrency]
+      hard_limit =25
+      soft_limit =20
+      type="connections"
+
+     [[services.ports]]
+         force_https = true
+         handlers = ["http"]
+         port = 80 
+
+      [[services.ports]]
+          handlers = ["tls", "http"]
+          port = 443
+
+      [[services.tcp_checks]]
+        grace_period = "1s"
+        interval = "15s"
+        restart_limit = 0
+        timeout = "25s"
 
 [http_service]
   internal_port = 8080
